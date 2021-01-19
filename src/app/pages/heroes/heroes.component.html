@@ -1,0 +1,66 @@
+<h1>Listado de Heroes</h1>
+<hr>
+
+<div class="row">
+    <div class="col text-end ">
+        <button class="btn btn-primary" [routerLink]="['/heroe/nuevo']" routerLinkActive="router-link-active" >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Agregar
+        </button>
+    </div>
+</div>
+
+<table *ngIf="!cargando && heroes.length>0" class="table mt-3 animate__animated animate__fadeIn animate__faster">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Poder</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Herramientas</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let hero of heroes; let i = index">
+            <th scope="row">{{ i+1 }}</th>
+            <td>{{ hero.nombre }}</td>
+            <td>{{ hero.poder }}</td>
+            <td>
+                <label *ngIf="hero.vivo" class="badge bg-success w-100">
+                    <i class="fas fa-smile-wink"></i>
+                    vivo
+                </label>
+                <label *ngIf="!hero.vivo" class="badge bg-danger w-100">
+                    <i class="fas fa-dizzy"></i>
+                    Muerto
+                </label>
+            </td>     
+            <td>
+                <button [routerLink]="['/heroe',hero.id]"  class="btn btn-info me-1">
+                    <i class="fas fa-pen"></i>
+                </button>
+                <button (click)="borrarHeroe(hero,i)" class="btn btn-info">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>       
+        </tr>
+    </tbody>
+</table>
+
+<div *ngIf="cargando" class="alert alert-info text-center mt-3  animate__animated animate__fadeIn animate__faster">
+    <h4 class="alert-haading">Cargando</h4>
+    <p>
+        <i class="fas fa-sync fa-spin fa-2x"></i>
+    </p>
+    <p class="mb-0">
+        Espere por favor
+    </p>
+</div>
+
+<div *ngIf="!cargando && heroes.length===0"  class="alert alert-warning text-center mt-3 animate__animated animate__fadeIn animate__faster">
+    <h4 class="alert-haading">No hay registros</h4>
+    <p>
+        <i class="fas fa-exclamation fa-2x"></i>
+    </p>
+</div>
+
